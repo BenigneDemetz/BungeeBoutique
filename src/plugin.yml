@@ -1,0 +1,10 @@
+name: DEADPVP-BOUTIQUE
+author: RedSpash
+version: 1.0.0
+main: fr.redspash.main.Main
+commands:
+  DPAutoGrade:
+    usage: debrouille toi
+  DPKitUnlocker:
+    usage: debrouille toi
+
