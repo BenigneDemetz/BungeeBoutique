@@ -10,6 +10,10 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.command.ConsoleCommandSender;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 
 public class KitUnlockerCmd extends Command {
     
@@ -26,9 +30,23 @@ public class KitUnlockerCmd extends Command {
         String amount = args[1];
         ServerInfo serverInfo = BungeeCord.getInstance().getServerInfo("pvpsoup");
         ProxiedPlayer player = ProxyServer.getInstance().getPlayer(args[0]);
-        utils.sendToBukkit ("command", "kb KitUnlocker give " + player + " " + amount, serverInfo);
+        sendToBukkit ("command", "kb KitUnlocker give " + player + " " + 1, serverInfo);
         
         for (ProxiedPlayer all : BungeeCord.getInstance().getPlayers()) all.
-                sendMessage(new TextComponent("§f\\n§f§l[§4§lD§1§lP§f§l-§d§lBOUTIQUE§f§l] §c§l\\" + player + "§b§lvien d'acheter §c§l" + amount + " §b§lKitUnlocker !"));
+                sendMessage(new TextComponent("§f§l[§4§lD§1§lP§f§l-§d§lBOUTIQUE§f§l] §c§l" + player + " §b§lvient d'acheter §c§l" + 1 + " §b§lKitUnlocker !"));
+    }
+    
+    public void sendToBukkit(String channel, String message, ServerInfo server) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(stream);
+        try {
+            out.writeUTF(channel);
+            out.writeUTF(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Note the "Return". It is the channel name that we registered in our Main class of Bungee plugin.
+        server.sendData("Return", stream.toByteArray());
+        
     }
 }
